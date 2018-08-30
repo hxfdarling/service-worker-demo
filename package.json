@@ -1,0 +1,25 @@
+{
+  "name": "service-worker-demo",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.3",
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "web-push": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint-config-zman": "0.0.4",
+    "nodemon": "^1.18.3"
+  }
+}
