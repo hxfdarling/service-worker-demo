@@ -31,7 +31,7 @@ function cleanUnusedCacheRequest() {
     });
   });
 }
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   // 清理缓存等其他操作
   event.waitUntil(
     cleanUnusedCacheRequest().then(() => {
@@ -59,22 +59,23 @@ function fromNetwork(request) {
 
 self.addEventListener('fetch', evt => {
   const { url, method } = evt.request;
+  console.log('sw-cache', url);
   if (
-    method !== 'GET'
-    || !/^https:/.test(url)
+    method !== 'GET' ||
+    !/^https:/.test(url) ||
     // 指定扩展名资源才能缓存
-    || !url.match(needCacheFileReg)
+    !url.match(needCacheFileReg)
   ) {
     return;
   }
   evt.respondWith(
     // 缓存优先
-    fromCache(url).catch(() => {
+    fromCache(evt.request).catch(() => {
       // 没有找到缓存，走线上
-      return fromNetwork(url).then(response => {
+      return fromNetwork(evt.request).then(response => {
         if (response && response.status === 200) {
           // 请求结果正常，加入缓存列表
-          addToCache(url, response);
+          addToCache(evt.request, response);
         }
         return response; // 必须返回response
       });
